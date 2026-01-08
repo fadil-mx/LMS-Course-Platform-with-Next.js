@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-      <main>{children}</main>
+      <main className='tracking-wide'>{children}</main>
     </div>
   )
 }
