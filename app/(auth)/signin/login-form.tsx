@@ -25,6 +25,7 @@ import { signinValidator } from '@/lib/validator'
 import { useState } from 'react'
 import { Eye, EyeOff, Github, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export function LoginForm({
   className,
@@ -124,9 +125,12 @@ export function LoginForm({
                   </FormItem>
                 )}
               />
-              <Button className='w-full' type='submit'>
-                Login
-              </Button>
+              <Field>
+                <Button type='submit'>Login</Button>
+                <FieldDescription className='text-center'>
+                  Don&apos;t have an account? <Link href='/signup'>Sign up</Link>
+                </FieldDescription>
+              </Field>
             </form>
           </Form>
         </CardContent>
