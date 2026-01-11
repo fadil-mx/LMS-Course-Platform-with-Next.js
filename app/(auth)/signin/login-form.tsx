@@ -23,27 +23,53 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { signinValidatorType } from '@/types'
 import { signinValidator } from '@/lib/validator'
 import { useState } from 'react'
-import { Eye, EyeOff, Github, X } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { Eye, EyeOff, X } from 'lucide-react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { signinWithCredentials } from '@/lib/actions/user'
+import { toast } from 'sonner'
+import { isRedirectError } from 'next/dist/client/components/redirect-error'
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
   const [showPassword, setShowPassword] = useState(false)
+  const searchparams = useSearchParams()
+  const callback = searchparams?.get('callback') || '/'
   const router = useRouter()
+
+  const defaultValues =
+    process.env.NODE_ENV === 'development'
+      ? {
+          email: 'test@gmail.com',
+          password: 'test1234',
+        }
+      : {
+          email: '',
+          password: '',
+        }
 
   const form = useForm<signinValidatorType>({
     resolver: zodResolver(signinValidator),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+    defaultValues: defaultValues,
   })
 
-  function onSubmit(values: signinValidatorType) {
-    console.log(values)
+  async function onSubmit(values: signinValidatorType) {
+    try {
+      await signinWithCredentials({
+        email: values.email,
+        password: values.password,
+      })
+
+      router.push(callback)
+    } catch (error) {
+      if (isRedirectError(error)) {
+        throw error
+      }
+      console.error(error)
+      toast.error((error as Error).message)
+    }
   }
 
   return (
@@ -128,7 +154,8 @@ export function LoginForm({
               <Field>
                 <Button type='submit'>Login</Button>
                 <FieldDescription className='text-center'>
-                  Don&apos;t have an account? <Link href='/signup'>Sign up</Link>
+                  Don&apos;t have an account?{' '}
+                  <Link href='/signup'>Sign up</Link>
                 </FieldDescription>
               </Field>
             </form>

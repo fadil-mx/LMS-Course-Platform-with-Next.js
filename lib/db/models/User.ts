@@ -31,7 +31,7 @@ const UserSchema = new Schema<IUser>({
     type: String,
   },
   emailverified: {
-    default: 'true',
+    default: 'false',
     type: Boolean,
   },
 })

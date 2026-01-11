@@ -21,31 +21,63 @@ import {
 } from '@/components/ui/form'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Eye, EyeOff, Github, X } from 'lucide-react'
+import { Eye, EyeOff } from 'lucide-react'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { useRouter } from 'next/navigation'
-import { signinValidatorType, signupValidatorType } from '@/types'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { signupValidatorType } from '@/types'
 import { signupValidator } from '@/lib/validator'
 import { FieldDescription, FieldSeparator } from '@/components/ui/field'
 import Link from 'next/link'
+import { createUser, signinWithCredentials } from '@/lib/actions/user'
+import { toast } from 'sonner'
 
 const Signupform = () => {
   const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
+  const searchparam = useSearchParams()
+  const callback = searchparam?.get('callback') || '/'
+
+  const defaultValues =
+    process.env.NODE_ENV === 'development'
+      ? {
+          name: 'Test User',
+          email: 'test@gmail.com',
+          password: 'test1234',
+          confirmPassword: 'test1234',
+        }
+      : {
+          name: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        }
 
   const form = useForm<signupValidatorType>({
     resolver: zodResolver(signupValidator),
-    defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },
+    defaultValues: defaultValues,
   })
 
-  function onSubmit(values: signinValidatorType) {
-    console.log(values)
+  async function onSubmit(values: signupValidatorType) {
+    try {
+      const res = await createUser(values)
+      if (!res.success) {
+        console.log(res.error)
+        toast.error(res.message)
+        return
+      }
+      toast.success(res.message)
+      await signinWithCredentials({
+        email: values.email,
+        password: values.password,
+      })
+
+      router.push(callback)
+    } catch (error) {
+      console.log(error)
+      toast.error(
+        error instanceof Error ? error.message : 'Something went wrong'
+      )
+    }
   }
 
   return (
