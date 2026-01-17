@@ -7,13 +7,13 @@ const SignoutButton = () => {
   return (
     <div>
       {' '}
-      <Button
+      <p
         onClick={() => {
           SignOut()
         }}
       >
         signout
-      </Button>
+      </p>
     </div>
   )
 }
