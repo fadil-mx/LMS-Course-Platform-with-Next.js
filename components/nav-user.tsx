@@ -1,11 +1,9 @@
 'use client'
 
 import {
-  IconCreditCard,
+  IconDashboard,
   IconDotsVertical,
   IconLogout,
-  IconNotification,
-  IconUserCircle,
 } from '@tabler/icons-react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -26,16 +24,11 @@ import {
 } from '@/components/ui/sidebar'
 import { useSession } from 'next-auth/react'
 import { cn } from '@/lib/utils'
+import { HomeIcon, Tv2 } from 'lucide-react'
+import Link from 'next/link'
+import SignoutButton from './shared/SignoutButton'
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
-}) {
+export function NavUser() {
   const { isMobile } = useSidebar()
   const { data: session } = useSession()
 
@@ -49,13 +42,13 @@ export function NavUser({
               size='lg'
               className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
-              <Avatar className='h-8 w-8 rounded-lg grayscale'>
+              <Avatar className='h-8 w-8 rounded-lg '>
                 <AvatarImage
                   src={cn(
                     session.user?.image ??
                       `https://avatar.vercel.sh/${session.user?.name}`,
                   )}
-                  alt={user.name}
+                  alt='no logo'
                 />
                 <AvatarFallback className='rounded-lg'>
                   {' '}
@@ -75,7 +68,7 @@ export function NavUser({
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className='w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg'
-            side={isMobile ? 'bottom' : 'right'}
+            side={isMobile ? 'bottom' : 'bottom'}
             align='end'
             sideOffset={4}
           >
@@ -87,7 +80,7 @@ export function NavUser({
                       session.user?.image ??
                         `https://avatar.vercel.sh/${session.user?.name}`,
                     )}
-                    alt={user.name}
+                    alt='no logo'
                   />
                   <AvatarFallback className='rounded-lg'>
                     {' '}
@@ -107,23 +100,29 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <IconUserCircle />
-                Account
+              <DropdownMenuItem asChild>
+                <Link href='/'>
+                  <HomeIcon />
+                  Homepage
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <IconCreditCard />
-                Billing
+              <DropdownMenuItem asChild>
+                <Link href='/admin'>
+                  <IconDashboard />
+                  Dashboard
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <IconNotification />
-                Notifications
+              <DropdownMenuItem asChild>
+                <Link href='/admin/courses'>
+                  <Tv2 />
+                  Courses
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <IconLogout />
-              Log out
+              <SignoutButton />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

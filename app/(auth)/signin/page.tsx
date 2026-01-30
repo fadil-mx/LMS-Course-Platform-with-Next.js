@@ -1,4 +1,3 @@
-import React from 'react'
 import { LoginForm } from './login-form'
 import { auth } from '@/auth'
 import { redirect } from 'next/navigation'
