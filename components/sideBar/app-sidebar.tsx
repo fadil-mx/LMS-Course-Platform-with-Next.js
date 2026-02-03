@@ -15,9 +15,9 @@ import {
   IconUsers,
 } from '@tabler/icons-react'
 
-import { NavMain } from '@/components/nav-main'
-import { NavSecondary } from '@/components/nav-secondary'
-import { NavUser } from '@/components/nav-user'
+import { NavMain } from '@/components/sideBar/nav-main'
+import { NavSecondary } from '@/components/sideBar/nav-secondary'
+import { NavUser } from '@/components/sideBar/nav-user'
 import {
   Sidebar,
   SidebarContent,
@@ -27,7 +27,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
-import { toast } from 'sonner'
 
 import Link from 'next/link'
 import Image from 'next/image'

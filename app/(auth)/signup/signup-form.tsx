@@ -25,7 +25,7 @@ import { Eye, EyeOff } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signupValidatorType } from '@/types'
-import { signupValidator } from '@/lib/validator'
+import { signupValidator } from '@/lib/validators/signvalidator'
 import { FieldDescription, FieldSeparator } from '@/components/ui/field'
 import Link from 'next/link'
 import { createUser, signinWithCredentials } from '@/lib/actions/user'
@@ -75,7 +75,7 @@ const Signupform = () => {
     } catch (error) {
       console.log(error)
       toast.error(
-        error instanceof Error ? error.message : 'Something went wrong'
+        error instanceof Error ? error.message : 'Something went wrong',
       )
     }
   }

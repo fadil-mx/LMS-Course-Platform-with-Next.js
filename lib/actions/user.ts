@@ -2,7 +2,7 @@
 
 import { signinValidatorType, signupValidatorType } from '@/types'
 import { ConnectDB } from '../db'
-import { signupValidator } from '../validator'
+import { signupValidator } from '../validators/signvalidator'
 import User from '../db/models/User'
 import bcrypt from 'bcryptjs'
 import { formatError } from '../utils'

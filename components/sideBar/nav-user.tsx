@@ -26,7 +26,7 @@ import { useSession } from 'next-auth/react'
 import { cn } from '@/lib/utils'
 import { HomeIcon, Tv2 } from 'lucide-react'
 import Link from 'next/link'
-import SignoutButton from './shared/SignoutButton'
+import SignoutButton from '../shared/SignoutButton'
 
 export function NavUser() {
   const { isMobile } = useSidebar()
