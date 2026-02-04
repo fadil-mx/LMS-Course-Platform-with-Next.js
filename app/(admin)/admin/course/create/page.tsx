@@ -9,21 +9,21 @@ import { CourseType } from '@/types'
 import { courseValidator } from '@/lib/validators/courseValidator'
 
 import { Input } from '@/components/ui/input'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
 } from '@/components/ui/field'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import {
   Card,
   CardContent,
@@ -39,6 +39,7 @@ import {
   InputGroupTextarea,
 } from '@/components/ui/input-group'
 import slugify from 'slugify'
+import { categoriesList, levelsList, statusList } from '@/lib/data'
 const page = () => {
   const form = useForm<CourseType>({
     resolver: zodResolver(courseValidator),
@@ -49,10 +50,10 @@ const page = () => {
       filekey: '',
       price: 0,
       duration: 1,
-      level: 'beginner',
-      category: 'health-fitness',
+      level: 'Beginner',
+      category: 'Development',
       smallDescription: '',
-      status: 'draft',
+      status: 'Draft',
       published: false,
     },
   })
@@ -89,7 +90,7 @@ const page = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={form.handleSubmit(onSubmit)}>
+              <form onSubmit={form.handleSubmit(onSubmit)} id='form-rhf-demo'>
                 <FieldGroup>
                   <Controller
                     name='title'
@@ -217,6 +218,149 @@ const page = () => {
                       </Field>
                     )}
                   />
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    <Controller
+                      name='category'
+                      control={form.control}
+                      render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                          <FieldLabel htmlFor='form-category'>
+                            Category
+                          </FieldLabel>
+                          <Select
+                            value={field.value.toString()}
+                            onValueChange={field.onChange}
+                          >
+                            <SelectTrigger className=''>
+                              <SelectValue placeholder='Theme'>
+                                {field.value}
+                              </SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                {categoriesList.map((category, index) => (
+                                  <SelectItem key={index} value={category}>
+                                    {category}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      )}
+                    />{' '}
+                    <Controller
+                      name='level'
+                      control={form.control}
+                      render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                          <FieldLabel htmlFor='form-level'>Level</FieldLabel>
+                          <Select
+                            value={field.value.toString()}
+                            onValueChange={field.onChange}
+                          >
+                            <SelectTrigger className='w-52'>
+                              <SelectValue placeholder='Level'>
+                                {field.value}
+                              </SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                {levelsList.map((level, index) => (
+                                  <SelectItem key={index} value={level}>
+                                    {level}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      )}
+                    />
+                  </div>
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    <Controller
+                      name='duration'
+                      control={form.control}
+                      render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                          <FieldLabel htmlFor='form-duration'>
+                            Duration (in hours)
+                          </FieldLabel>
+                          <Input
+                            {...field}
+                            id='form-duration'
+                            aria-invalid={fieldState.invalid}
+                            placeholder='duration in hours'
+                            autoComplete='off'
+                            type='number'
+                          />
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      )}
+                    />
+                    <Controller
+                      name='price'
+                      control={form.control}
+                      render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                          <FieldLabel htmlFor='form-price'>
+                            Price ($)
+                          </FieldLabel>
+                          <Input
+                            {...field}
+                            id='form-price'
+                            aria-invalid={fieldState.invalid}
+                            placeholder='price in USD'
+                            autoComplete='off'
+                            type='number'
+                          />
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      )}
+                    />
+                  </div>
+                  <Controller
+                    name='status'
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor='form-status'>Status</FieldLabel>
+                        <Select
+                          value={field.value.toString()}
+                          onValueChange={field.onChange}
+                        >
+                          <SelectTrigger className=''>
+                            <SelectValue placeholder='Status'>
+                              {field.value}
+                            </SelectValue>
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              {statusList.map((category, index) => (
+                                <SelectItem key={index} value={category}>
+                                  {category}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    )}
+                  />{' '}
                 </FieldGroup>
               </form>
             </CardContent>
@@ -230,7 +374,7 @@ const page = () => {
                   Reset
                 </Button>
                 <Button type='submit' form='form-rhf-demo'>
-                  Submit
+                  Create Course
                 </Button>
               </Field>
             </CardFooter>

@@ -15,34 +15,34 @@ export const courseValidator = z.object({
   duration: z.number().min(1, 'Duration must be at least 1 minute'),
   level: z
     .enum(
-      ['beginner', 'intermediate', 'advanced'],
-      'Level must be one of: beginner, intermediate, advanced',
+      ['Beginner', 'Intermediate', 'Advanced'],
+      'Level must be one of: Beginner, Intermediate, Advanced',
     )
-    .default('beginner'),
+    .default('Beginner'),
   category: z.enum(
     [
-      'development',
-      'finance',
-      'it & software',
-      'design',
-      'marketing',
-      'business',
-      'photography',
-      'music',
-      'personal-development',
-      'health-fitness',
-      'language-learning',
-      'teaching',
-      'other',
+      'Development',
+      'Finance',
+      'IT & Software',
+      'Design',
+      'Marketing',
+      'Business',
+      'Photography',
+      'Music',
+      'Personal Development',
+      'Health & Fitness',
+      'Language Learning',
+      'Teaching',
+      'Lifestyle',
     ],
     'Category must be one of the predefined categories',
   ),
-  smallDescription: z.string().min(200),
+  smallDescription: z.string().min(100),
   status: z
     .enum(
-      ['draft', 'published', 'archived'],
+      ['Draft', 'Published', 'Archived  '],
       'Status must be one of: draft, published, archived',
     )
-    .default('draft'),
+    .default('Draft'),
   published: z.boolean().default(false),
 })

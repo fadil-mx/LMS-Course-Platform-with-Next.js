@@ -27,3 +27,22 @@ export const features: Feature = [
     icon: Users,
   },
 ]
+
+export const categoriesList: string[] = [
+  'Development',
+  'Finance',
+  'IT & Software',
+  'Design',
+  'Marketing',
+  'Business',
+  'Photography',
+  'Music',
+  'Personal Development',
+  'Health & Fitness',
+  'Language Learning',
+  'Teaching',
+  'Lifestyle',
+]
+
+export const levelsList: string[] = ['Beginner', 'Intermediate', 'Advanced']
+export const statusList: string[] = ['Draft', 'Published', 'Archived']
