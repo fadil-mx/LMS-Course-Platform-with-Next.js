@@ -40,6 +40,7 @@ import {
 } from '@/components/ui/input-group'
 import slugify from 'slugify'
 import { categoriesList, levelsList, statusList } from '@/lib/data'
+import { RichTextEditor } from '@/components/shared/richEditor'
 const page = () => {
   const form = useForm<CourseType>({
     resolver: zodResolver(courseValidator),
@@ -177,21 +178,10 @@ const page = () => {
                         <FieldLabel htmlFor='form-rhf-demo-description'>
                           Description
                         </FieldLabel>
-                        <InputGroup>
-                          <InputGroupTextarea
-                            {...field}
-                            id='form-rhf-demo-description'
-                            placeholder='Describe your course in detail.'
-                            rows={6}
-                            className='h-18 max-h-26  resize-none'
-                            aria-invalid={fieldState.invalid}
-                          />
-                          <InputGroupAddon align='block-end'>
-                            <InputGroupText className='tabular-nums'>
-                              {field.value.length}/500 characters
-                            </InputGroupText>
-                          </InputGroupAddon>
-                        </InputGroup>
+                        <RichTextEditor
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
 
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
