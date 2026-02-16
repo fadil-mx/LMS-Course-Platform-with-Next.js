@@ -11,12 +11,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
@@ -63,7 +58,7 @@ const NavBar = async () => {
             className={cn(
               buttonVariants({
                 variant: 'default',
-              })
+              }),
             )}
           >
             Login
@@ -74,7 +69,7 @@ const NavBar = async () => {
               <Avatar>
                 <AvatarImage
                   src={cn(
-                    session.user?.image ?? 'https://github.com/shadcn.png'
+                    session.user?.image ?? 'https://github.com/shadcn.png',
                   )}
                   alt='@shadcn'
                 />
@@ -83,7 +78,7 @@ const NavBar = async () => {
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className='w-56' align='end'>
+            <DropdownMenuContent className='w-40 lg:w-48' align='end'>
               <DropdownMenuLabel className='flex min-w-0 flex-col'>
                 <span className=' truncate text-foreground text-sm font-medium'>
                   {session?.user.name}

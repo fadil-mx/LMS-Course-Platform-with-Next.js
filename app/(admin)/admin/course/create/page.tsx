@@ -41,6 +41,7 @@ import {
 import slugify from 'slugify'
 import { categoriesList, levelsList, statusList } from '@/lib/data'
 import { RichTextEditor } from '@/components/shared/richEditor'
+import FileUploader from '@/components/File-uploader/fileUploader'
 const page = () => {
   const form = useForm<CourseType>({
     resolver: zodResolver(courseValidator),
@@ -195,13 +196,14 @@ const page = () => {
                     render={({ field, fieldState }) => (
                       <Field data-invalid={fieldState.invalid}>
                         <FieldLabel htmlFor='form-filekey'>File Key</FieldLabel>
-                        <Input
+                        {/* <Input
                           {...field}
                           id='form-filekey'
                           aria-invalid={fieldState.invalid}
                           placeholder='thumbnail url'
                           autoComplete='off'
-                        />
+                        /> */}
+                        <FileUploader />
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
                         )}
